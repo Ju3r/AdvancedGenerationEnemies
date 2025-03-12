@@ -19,7 +19,7 @@ public class EnemySpawner : MonoBehaviour
         foreach (var spawnPoint in _spawnPoints)
         {
             Enemy enemy = Instantiate(spawnPoint.Enemy, spawnPoint.transform.position, Quaternion.identity);
-            enemy.Init(spawnPoint.Target.position);
+            enemy.Init(spawnPoint.Target);
         }
     }
 

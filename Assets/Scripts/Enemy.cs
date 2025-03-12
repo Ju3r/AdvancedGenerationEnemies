@@ -10,17 +10,17 @@ public class Enemy : MonoBehaviour
         _mover = GetComponent<Mover>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         _mover.Move();
     }
 
-    public void Init(Vector3 target)
+    public void Init(Target target)
     {
         SetTarget(target);
     }
 
-    public void SetTarget(Vector3 target)
+    public void SetTarget(Target target)
     {
         _mover.SetTarget(target);
     }

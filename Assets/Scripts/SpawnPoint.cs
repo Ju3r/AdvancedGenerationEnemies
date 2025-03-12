@@ -6,5 +6,5 @@ public class SpawnPoint : MonoBehaviour
     public Enemy Enemy { get; private set; }
 
     [field: SerializeField]
-    public Transform Target { get; private set; }
+    public Target Target { get; private set; }
 }

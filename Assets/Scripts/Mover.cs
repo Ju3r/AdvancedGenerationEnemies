@@ -2,27 +2,32 @@ using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
-    private float _speed = 5f;
+    private float _speed = 1f;
 
-    private Vector3 _target = new Vector3();
+    public Target Target { get; private set; }
     
     public void Move()
     {
-        if (_target == Vector3.zero)
+        if (Target == null)
             return;
 
         SetRotationToTarget();
 
-        transform.position = Vector3.MoveTowards(transform.position, _target, _speed * Time.fixedDeltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, Target.transform.position, _speed * Time.fixedDeltaTime);
     }
 
-    public void SetTarget(Vector3 target)
+    public void Move(Vector3 position)
     {
-        _target = target;
+        transform.position = Vector3.MoveTowards(transform.position, position, _speed * Time.fixedDeltaTime);
+    }
+
+    public void SetTarget(Target target)
+    {
+        Target = target;
     }
 
     private void SetRotationToTarget()
     {
-        transform.rotation = Quaternion.Euler(_target);
+        transform.rotation = Quaternion.Euler(Target.transform.position);
     }
 }
