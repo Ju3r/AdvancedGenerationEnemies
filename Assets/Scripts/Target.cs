@@ -1,36 +1,32 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Mover))]
 public class Target : MonoBehaviour 
 {
-    private const int StartIndex = 0;
-
     [SerializeField] private List<WayPoint> _wayPoints = new List<WayPoint>();
+    [SerializeField] private float _speed = 1f;
 
-    private Mover _mover;
+    private const int StartIndex = 0;
     private int _currentWayPointIndex = StartIndex;
 
-    private void Awake()
+    private void FixedUpdate()
     {
-        _mover = GetComponent<Mover>();
-    }
-
-    private void Update()
-    {
-        _mover.Move(_wayPoints[_currentWayPointIndex].transform.position);
+        Move(_wayPoints[_currentWayPointIndex].transform.position);
     }
 
     public void SetNextWayPoint()
     {
-        if ((_currentWayPointIndex + 1) < _wayPoints.Count)
-            _currentWayPointIndex++;
-        else
-            _currentWayPointIndex = StartIndex;
+        _currentWayPointIndex = (++_currentWayPointIndex) % _wayPoints.Count;
+
     }
 
     public bool IsWayPointOnList(WayPoint wayPoint)
     {
-        return _wayPoints.Contains(wayPoint);
+        return wayPoint.transform == _wayPoints[_currentWayPointIndex].transform;
+    }
+
+    private void Move(Vector3 position)
+    {
+        transform.position = Vector3.MoveTowards(transform.position, position, _speed * Time.fixedDeltaTime);
     }
 }

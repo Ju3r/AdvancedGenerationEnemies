@@ -1,27 +1,27 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Mover))]
 public class Enemy : MonoBehaviour 
 {
-    private Mover _mover;
+    [SerializeField] private float _speed = 1f;
 
-    private void Awake()
-    {
-        _mover = GetComponent<Mover>();
-    }
+    private Target _target;
 
-    private void Update()
+    private void FixedUpdate()
     {
-        _mover.Move();
+        Move();
     }
 
     public void Init(Target target)
     {
-        SetTarget(target);
+        _target = target;
     }
 
-    public void SetTarget(Target target)
+    private void Move()
     {
-        _mover.SetTarget(target);
+        if (_target == null)
+            return;
+
+        transform.rotation = Quaternion.Euler(_target.transform.position);
+        transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, _speed * Time.fixedDeltaTime);
     }
 }
